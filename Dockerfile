@@ -15,4 +15,6 @@ COPY . /usr/src/app/
 EXPOSE 8080
 
 # Run command
-CMD ["bash", "-C", "/usr/src/app/init.sh"]
+# RUN /usr/src/app/init.sh
+# CMD ["bash", "-C", "/usr/src/app/init.sh"]
+CMD ["npm", "start"]

@@ -7,7 +7,15 @@ const PORT = 8080;
 
 // App
 const app = express();
-require('./lib/apis.js')(app);
+var bodyParser = require('body-parser');
+
+var middleware_params = {
+	app_param: app,
+	express_param: express,
+	bodyParser_param: bodyParser
+};
+
+require('./lib/apis.js')(middleware_params);
 
 // Create view engine
 var handlebars = require('express3-handlebars').create({ defaultLayout:'main' });

@@ -9,6 +9,8 @@
   },
   "dependencies": {
     "express": "^4.13.3",
-    "express3-handlebars": "*"
+    "express3-handlebars": "*",
+    "aws-sdk": "*",
+    "body-parser": "*"
   }
 }
