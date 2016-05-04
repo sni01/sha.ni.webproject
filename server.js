@@ -8,11 +8,15 @@ const PORT = 8080;
 // App
 const app = express();
 var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
+var session = require('express-session');
 
 var middleware_params = {
-	app_param: app,
-	express_param: express,
-	bodyParser_param: bodyParser
+	app_param : app,
+	express_param : express,
+	bodyParser_param : bodyParser,
+	cookieParser_param : cookieParser,
+	session_param : session
 };
 
 require('./lib/apis.js')(middleware_params);
