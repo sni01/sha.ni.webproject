@@ -1,12 +1,20 @@
 <!doctype html>
 <html>
   <head>
-	<title>Bay Arera FLAG Companies Salon</title>
- 	<img src="/images/beta-testing.jpg" alt="Bay Area FLAG companies Salon">
- 	<script src="scripts/jquery-2.0.2.min.js"></script>
-	<script src="/scripts/home.js"></script>
+		<title>Bay Arera FLAG Companies Salon</title>
+ 		<img src="/images/beta-testing.jpg" alt="Bay Area FLAG companies Salon">
+ 		<script src="scripts/jquery-2.0.2.min.js"></script>
+		<script src="/scripts/home.js"></script>
   </head>
   <body>
- 	{{{body}}}
-  </body>
+		<ul id="user_info_table" hidden>
+  		<li id="name">{{ name }}</li>
+  		<li id="email">{{ email }}</li>
+  		<li id="logged_in">{{ logged_in }}</li>
+		</ul>
+ 		{{{body}}}
+		<div id="account_menu">
+			<button id="user_logout_button" value="Log Out"/>
+		</div>
+	</body>
 </html>

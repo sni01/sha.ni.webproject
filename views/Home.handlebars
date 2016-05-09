@@ -1,19 +1,13 @@
 <h1>Welcome to the home of engineer in Bay Area!</h1>
-{{#if user_logged_in}}
-	<div id="user_reg_logged_in">Welcome Back {{ user_name }}</div>
-{{else}}
-	<div id="user_login">
-		<form id="user_login_form">
-			<fieldset>
-				<label for="user_email">Email:</label>
-				<input id="user_login_email" type="text" placeholder="Enter your Email" />
-				<label for="user_password">Password:</label>
-				<input id="user_login_password" type="password" placeholder="Enter your Password" />
-				<input id="user_login_button" type="button" value="Sign In">
-				<a id="user_login_redirect_create_account_page">Create New Account</a>
-			</fieldset>
-		</form>
-	</div>
-{{/if}}
-
-<button id="user_logout_button">Log out</button>
+<div id="user_login">
+	<form id="user_login_form">
+		<fieldset>
+			<label for="user_email">Email:</label>
+			<input id="user_login_email" type="text" placeholder="Enter your Email" />
+			<label for="user_password">Password:</label>
+			<input id="user_login_password" type="password" placeholder="Enter your Password" />
+			<input id="user_login_button" type="button" value="Sign In">
+			<a id="redirect_create_account_page" href="/register">Create New Account</a>
+		</fieldset>
+	</form>
+</div>
