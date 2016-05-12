@@ -44,8 +44,7 @@ $(document).ready(function(){
 	function onNewUserCreationCallBack(data) {
 		var create_status = data.status;
 		if (create_status == 0) {
-			$("#user_reg_form").css('display', 'none');
-    	prependInfoDiv($("#user_reg"), "user_reg_status_info", "Welcome to our family: " + data.name);
+    	prependInfoDiv($("#user_reg"), "user_reg_status_info", "We send out a verification email to " + data.email);
 		}
 		else if (create_status == 1) {
 			prependInfoDiv($("#user_reg"), "user_reg_status_info", "This email has already been used.");	

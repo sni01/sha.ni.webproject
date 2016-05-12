@@ -13,6 +13,7 @@
     "aws-sdk": "*",
     "body-parser": "*",
     "cookie-parser": "*",
-    "express-session": "*"
+    "express-session": "*",
+		"rand-token": "*"
   }
 }
