@@ -2,13 +2,10 @@
 // when page is loaded, run all needed functions.
 $(document).ready(function(){
 	// Check if user is logged in at first
-	ajaxWithJsonData({}, "/", "GET", onLoadHomePageCallBack);
-
-	function onLoadHomePageCallBack(data){
+	(function onLoadHomePageCallBack(){
 		var logged_in = $("#logged_in").text();
 		var name = $("#name").text();
 		var email = $("#email").text();
-		console.log(name);
 		if(logged_in == "true") {
 			prependInfoDiv($("#user_login"), "user_login_status_info", "Welcome Back " + name);
 			$("#user_login_form").css('display', 'none');
@@ -16,19 +13,22 @@ $(document).ready(function(){
 		else {
 			$("#user_login_form").css('display', 'block');
 		}
-	}
+	}());
 
-	// Redirect to create account page
-	$('#redirect_create_account_page').click(function(){
-		//ajaxWithJsonData({}, "/register", "GET", null);
-	});
+	(function onLoadRegisterPageCallBack(){
+		var logged_in = $("#logged_in").text();
+		var name = $("#name").text();
+		var email = $("#email").text();
+		if(logged_in == "true") {
+			prependInfoDiv($("#user_reg"), "user_reg_status_info", "Please log out before register a new account.");
+			$("#user_reg_form").css('display', 'none');
+		}	
+		else {
+			// normally render register page
+		}
+	}());
 
 	$("#user_reg_submit").click(function(){
-		var logged_in = $("#logged_in").text();
-		if (logged_in == 'true') {
-			alert("please logout before create new account");
-			return;
-		}
 		var user_info = {
 				"name" :	$("#user_reg_name").val(),
         "email"	: $("#user_reg_email").val(),
@@ -37,21 +37,26 @@ $(document).ready(function(){
         "time" : Date.now()
     };
 		// ajax send to user accoutn info to server
-		ajaxWithJsonData(user_info, "/user", "POST", onNewUserCreationSuccess);
+		ajaxWithJsonData(user_info, "/user", "POST", onNewUserCreationCallBack);
 	});
 	
 	// Upate views when create user call succeeded.
-	// Hide form and show "welcome" text div
-	function onNewUserCreationSuccess(data) {
-		var status = data.status;
-		if (status == 0) {
-			$("#user_reg_form").remove();
-    	prependInfoDiv($("user_reg"), "user_reg_status_info", "Welcome to our family: " + data.name);
+	function onNewUserCreationCallBack(data) {
+		var create_status = data.status;
+		if (create_status == 0) {
+			$("#user_reg_form").css('display', 'none');
+    	prependInfoDiv($("#user_reg"), "user_reg_status_info", "Welcome to our family: " + data.name);
 		}
-		else if (status == 2) {
-			prependInfoDiv($("user_reg"), "user_reg_status_info", "This email has already been used.");	
+		else if (create_status == 1) {
+			prependInfoDiv($("#user_reg"), "user_reg_status_info", "This email has already been used.");	
 		}
-		else{}
+		else if (create_status == 2) {
+			prependInfoDiv($("#user_reg"), "user_reg_status_info", "This email is waiting for verification.");
+		}
+		else if (create_status == 9) {
+			prependInfoDiv($("#user_reg"), "user_reg_status_info", "Database Error");
+		}
+		else {}
 	}
 
 	$("#user_login_button").click(function(){
@@ -61,22 +66,33 @@ $(document).ready(function(){
 		ajaxWithJsonData(login_info, "/login", "POST", loginCallBack);
 	});
 
-	// Update views after user login
+	/* 
+ 	 * Update views after user login
+	 * 0 : success
+	 * 1 : account doesn't exist
+	 * 2 : waiting for verification
+	 * 3 : password incorrect
+	 * 9 : database error
+	 */
 	function loginCallBack(data) {
-		var user_status = data.status;
-		if (user_status == 0) {
-			// password incorrect
+		var login_status = data.status;
+		if (login_status == 0) {
 			$("#user_login_form").css('display', 'none');
 			prependInfoDiv($("#user_login"), "user_login_status_info", "Welcome Back " + data.name);
 		}
-		else if (user_status == 1) {
-			// user not exists
-			prependInfoDiv($("#user_login"), "user_login_status_info","Password Error");
+		else if (login_status == 1) {
+			prependInfoDiv($("#user_login"), "user_login_status_info", "No existing account " + data.email);
 		}
-		else {
-			// login
-			prependInfoDiv($("#user_login"), "user_login_status_info","User Account doesn't exist");	
+		else if (login_status == 2) {
+			prependInfoDiv($("#user_login"), "user_login_status_info","Account " + data.email + "needed verification");
 		}
+		else if (login_status == 3) {
+			prependInfoDiv($("#user_login"), "user_login_status_info", "Password Incorrect");
+		}
+		else if (login_status == 9){
+			prependInfoDiv($("#user_login"), "user_login_status_info", "Database Error");
+		}
+		else {}
 	}
 
 	
@@ -92,8 +108,13 @@ $(document).ready(function(){
  	 * Update views back to login form after logout
  	 */
 	function logoutCallBack(data) {
+		// Recover login form
 		$("#user_login_status_info").remove();
 		$("#user_login_form").css('display', 'block');
+
+		// Recover register form
+		$("#user_reg_status_info").remove();
+		$("#user_reg_form").css('display', 'block');
 	}
 	
 	/*
