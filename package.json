@@ -16,6 +16,7 @@
     "express-session": "*",
 		"rand-token": "*",
 		"nodemailer": "*",
-		"nodemailer-express-handlebars": "*"
+		"nodemailer-express-handlebars": "*",
+		"nodemailer-ses-transport": "*"
   }
 }

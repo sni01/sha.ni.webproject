@@ -39,6 +39,14 @@ $(document).ready(function(){
 		// ajax send to user accoutn info to server
 		ajaxWithJsonData(user_info, "/user", "POST", onNewUserCreationCallBack);
 	});
+
+	// prepended status div for reset password page
+	(function onLoadResetPasswordCallBack(){
+		var status = $("#name").text();
+		if(status != 0){
+			prependInfoDiv($("#reset_password_div"), "reset_password_status", "something went wrong!");
+		}
+	}());
 	
 	// Upate views when create user call succeeded.
 	function onNewUserCreationCallBack(data) {
@@ -114,6 +122,38 @@ $(document).ready(function(){
 		// Recover register form
 		$("#user_reg_status_info").remove();
 		$("#user_reg_form").css('display', 'block');
+	}
+
+	/*
+ 	 * Reset Password Form Submission
+   */
+	$("#reset_password_button").click(function(){
+		// firstly check two passwords are the same
+		var password1 = $("#reset_password_1").val();
+		var password2 = $("#reset_password_2").val();
+		if(password1 != password2){
+			prependInfoDiv($("#reset_password_div"), "reset_password_status", "two passwords do not match.");
+			return;
+		}
+		
+		// send POST method
+		var jsonData = {
+				'email' : $("#email").text,
+				'token' : $("#reset_password_token").text,
+				'password' : password1
+		};
+		ajaxWithJsonData(jsonData, '/reset_password', 'POST', resetPasswordCallBack);
+	});
+
+	function resetPasswordCallBack(data){
+		if(data.status != 0){
+			if($("#reset_password_status")) $("#reset_password_status").text() = "reset password went wrong.";
+			else prependInfoDiv($("#reset_password_div"), "reset_password_status", "reset password went wrong.");
+		}
+		else{
+			if($("#reset_password_status")) $("#reset_password_status").text() = "reset password successfully.";
+			else prependInfoDiv($("#reset_password_div"), "reset_password_status", "reset password successfully.");
+		}
 	}
 	
 	/*

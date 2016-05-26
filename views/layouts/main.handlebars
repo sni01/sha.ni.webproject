@@ -6,12 +6,15 @@
  		<script src="scripts/jquery-2.0.2.min.js"></script>
 		<script src="/scripts/home.js"></script>
 		<script src="/scripts/email.js"></script>
+		<link rel="stylesheet" type="text/css" href="home.css">
   </head>
   <body>
 		<ul id="user_info_table" hidden>
   		<li id="name">{{ name }}</li>
   		<li id="email">{{ email }}</li>
   		<li id="logged_in">{{ logged_in }}</li>
+			<li id="reset_password_token">{{ token }}</li>
+			<li id="reset_password_status">{{ status }}</li>
 		</ul>
  		{{{body}}}
 		<div id="account_menu">
