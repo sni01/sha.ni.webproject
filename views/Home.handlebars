@@ -1,13 +1,19 @@
 <h1>Welcome to the home of engineer in Bay Area!</h1>
-<div id="user_login">
-	<form id="user_login_form">
-		<fieldset>
-			<label for="user_email">Email:</label>
-			<input id="user_login_email" type="text" placeholder="Enter your Email" />
-			<label for="user_password">Password:</label>
-			<input id="user_login_password" type="password" placeholder="Enter your Password" />
-			<input id="user_login_button" type="button" value="Sign In">
-		</fieldset>
-	</form>
-	<a id="redirect_create_account_page" href="/register">Create New Account</a>
+<div id="user_login_wrapper">
+	<div id="user_login">
+		{{#if logged_in }}
+  		<div id="user_login_status_info">Welcome Back: {{ name }}</div>
+	{{/if}}
+		<form id="user_login_form" {{#if logged_in}}hidden{{/if}}>
+			<fieldset>
+				<label for="user_email">Email:</label>
+				<input id="user_login_email" type="text" placeholder="Enter your Email" />
+				<label for="user_password">Password:</label>
+				<input id="user_login_password" type="password" placeholder="Enter your Password" />
+				<input id="user_login_button" type="button" value="Sign In">
+			</fieldset>
+		</form>
+		<a id="redirect_create_account_page" href="/register">Create New Account</a>
+		<a id="reset_password_init_button" href="/reset_password">Reset Password</a>
+	</div>
 </div>

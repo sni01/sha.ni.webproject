@@ -1,33 +1,6 @@
 // user submit form to create a new account
 // when page is loaded, run all needed functions.
 $(document).ready(function(){
-	// Check if user is logged in at first
-	(function onLoadHomePageCallBack(){
-		var logged_in = $("#logged_in").text();
-		var name = $("#name").text();
-		var email = $("#email").text();
-		if(logged_in == "true") {
-			prependInfoDiv($("#user_login"), "user_login_status_info", "Welcome Back " + name);
-			$("#user_login_form").css('display', 'none');
-		}
-		else {
-			$("#user_login_form").css('display', 'block');
-		}
-	}());
-
-	(function onLoadRegisterPageCallBack(){
-		var logged_in = $("#logged_in").text();
-		var name = $("#name").text();
-		var email = $("#email").text();
-		if(logged_in == "true") {
-			prependInfoDiv($("#user_reg"), "user_reg_status_info", "Please log out before register a new account.");
-			$("#user_reg_form").css('display', 'none');
-		}	
-		else {
-			// normally render register page
-		}
-	}());
-
 	$("#user_reg_submit").click(function(){
 		var user_info = {
 				"name" :	$("#user_reg_name").val(),
@@ -107,8 +80,7 @@ $(document).ready(function(){
 	 * return 1, log out successfully
 	 */
 	$("#user_logout_button").click(function(){
-		var request_object = {};
-		ajaxWithJsonData(request_object, "/logout", "GET", logoutCallBack);
+		ajaxWithJsonData(null, "/logout", "GET", logoutCallBack);
 	});
 	
 	/*
@@ -123,6 +95,20 @@ $(document).ready(function(){
 		$("#user_reg_status_info").remove();
 		$("#user_reg_form").css('display', 'block');
 	}
+	/*
+ 	 * Start Reset Password Process
+   */
+	$("#reset_password_init").click(function(){
+		ajaxWithJsonData(null, "/reset_password", "GET", resetPasswordInitCallBack);
+	});
+	
+	function resetPasswordInitCallBack(result){
+		var parent = $("#info_section");
+		while (parent.hasChildNodes()) {
+    	parent.removeChild(node.lastChild);
+		}
+		prependInfoDiv(parent, "status_message", result.info);
+	}
 
 	/*
  	 * Reset Password Form Submission
@@ -132,28 +118,27 @@ $(document).ready(function(){
 		var password1 = $("#reset_password_1").val();
 		var password2 = $("#reset_password_2").val();
 		if(password1 != password2){
+			$("#reset_password_status_info").remove();
 			prependInfoDiv($("#reset_password_div"), "reset_password_status", "two passwords do not match.");
 			return;
 		}
 		
+		console.log($("#reset_password_email").text());	
 		// send POST method
 		var jsonData = {
-				'email' : $("#email").text,
-				'token' : $("#reset_password_token").text,
+				'email' : $("#reset_password_email").text(),
+				'token' : $("#reset_password_token").text(),
 				'password' : password1
 		};
 		ajaxWithJsonData(jsonData, '/reset_password', 'POST', resetPasswordCallBack);
 	});
 
-	function resetPasswordCallBack(data){
-		if(data.status != 0){
-			if($("#reset_password_status")) $("#reset_password_status").text() = "reset password went wrong.";
-			else prependInfoDiv($("#reset_password_div"), "reset_password_status", "reset password went wrong.");
-		}
-		else{
-			if($("#reset_password_status")) $("#reset_password_status").text() = "reset password successfully.";
-			else prependInfoDiv($("#reset_password_div"), "reset_password_status", "reset password successfully.");
-		}
+	function resetPasswordCallBack(result){
+		if($("#reset_password_status_info")) $("#reset_password_status_info").remove();
+		prependInfoDiv($("#reset_password_div"), "reset_password_status_info", result.info);
+
+		// Hide Reset Form
+		$("#reset_password_form").css('display', 'none');
 	}
 	
 	/*
