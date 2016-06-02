@@ -1,0 +1,15 @@
+version: 0.0
+os: linux
+files:
+    - source: /
+      destination: /sha.ni.webproject
+permission:
+    - object: /sha.ni.webproject
+hooks:
+    AfterInstall:
+    - locations: scripts/stop_and_remove_images.sh
+      runas: root
+    - locations: scripts/build_image.sh
+      runas: root
+    - locations: scripts/start_server.sh
+      runas: root
