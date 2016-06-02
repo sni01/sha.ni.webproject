@@ -7,9 +7,9 @@ permission:
     - object: /sha.ni.webproject
 hooks:
     AfterInstall:
-    - locations: scripts/stop_and_remove_images.sh
+    - location: scripts/stop_and_remove_images.sh
       runas: root
-    - locations: scripts/build_image.sh
+    - location: scripts/build_image.sh
       runas: root
-    - locations: scripts/start_server.sh
+    - location: scripts/start_server.sh
       runas: root
