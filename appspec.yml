@@ -5,6 +5,7 @@ files:
       destination: /home/sha.ni.webproject
 permission:
     - object: /home/sha.ni.webproject
+    - mode: 777
 hooks:
     AfterInstall:
     - location: scripts/stop_and_remove_images.sh
