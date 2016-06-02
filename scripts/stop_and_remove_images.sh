@@ -1,5 +1,5 @@
 #!/bin/bash
-pre_containers = $(docker ps -a -q);
+pre_containers=$(docker ps -a -q);
 if [ -z "$pre_containers" ]
 then exit 0
 else
