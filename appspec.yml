@@ -2,9 +2,9 @@ version: 0.0
 os: linux
 files:
     - source: /
-      destination: ~/sha.ni.webproject
+      destination: /home/sha.ni.webproject
 permission:
-    - object: ~/sha.ni.webproject
+    - object: /home/sha.ni.webproject
 hooks:
     AfterInstall:
     - location: scripts/stop_and_remove_images.sh
