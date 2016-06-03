@@ -5,7 +5,8 @@
   "author": "First Last <first.last@example.com>",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "NODE_ENV='prod' node server.js",
+    "develop": "NODE_ENV='dev' node server.js"
   },
   "dependencies": {
     "express": "^4.13.3",
@@ -14,9 +15,10 @@
     "body-parser": "*",
     "cookie-parser": "*",
     "express-session": "*",
-		"rand-token": "*",
-		"nodemailer": "*",
-		"nodemailer-express-handlebars": "*",
-		"nodemailer-ses-transport": "*"
+    "rand-token": "*",
+    "nodemailer": "*",
+    "nodemailer-express-handlebars": "*",
+    "nodemailer-ses-transport": "*",
+    "node-mailer": "^0.1.1"
   }
 }

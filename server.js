@@ -1,15 +1,16 @@
-'use strict';
+// 'use strict';
 
 const express = require('express');
-
-// Constants
-const PORT = 8080;
 
 // App
 const app = express();
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
+
+// Environment Variables
+const PORT = 8080;
+const MODE = app.get('env'); // prod or dev
 
 var middleware_params = {
 	app_param : app,

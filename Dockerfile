@@ -14,7 +14,6 @@ COPY . /usr/src/app/
 # expose port
 EXPOSE 8080
 
-# Run command
 # RUN /usr/src/app/init.sh
-# CMD ["bash", "-C", "/usr/src/app/init.sh"]
-CMD ["npm", "start"]
+CMD ["/usr/src/app/init.sh"]
+#CMD ["npm", "start"]
